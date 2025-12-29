@@ -1,10 +1,10 @@
 # This Python file uses the following encoding: utf-8
-import sys
+import sys,os
 from datetime import datetime
 from smtplib import SMTPAuthenticationError
 from PySide2.QtWidgets import QApplication, QWidget, QMessageBox, QListWidgetItem, QAbstractItemView, QProgressDialog
 from PySide2.QtCore import QCoreApplication, Qt, QThread
-from PySide2.QtGui import QFont, QFontMetrics, QCursor
+from PySide2.QtGui import QFont, QFontMetrics, QCursor, QIcon
 from ui_mailclient import Ui_MainWindows
 from mailsession import MailSession
 from mailstorage import MailStorage
@@ -26,6 +26,7 @@ class MailClient(QWidget):
         self.sentbox_mail_frames = []
         self.ui = Ui_MainWindows()
         self.ui.setupUi(self)
+        self._set_window_icon()
         
         self.init_ui()
 
@@ -96,6 +97,12 @@ class MailClient(QWidget):
                 item.setSizeHint(frame.sizeHint())
                 list_widget.addItem(item)
                 list_widget.setItemWidget(item, frame)
+
+    def _set_window_icon(self):
+        """设置窗口图标（如果文件存在）。"""
+        icon_path = os.path.join(os.path.dirname(__file__), 'app_icon.png')
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
     
     def load_last_login_info(self):
         """从数据库加载上次登录的用户信息到UI"""
