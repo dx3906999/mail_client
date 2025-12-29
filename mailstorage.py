@@ -4,7 +4,8 @@ import hashlib
 import json
 from email import message_from_string
 import sys
-sys.stdout.reconfigure(encoding="utf-8")
+import time
+
 
 class MailStorage:
     def __init__(self, db_path:str):
@@ -132,7 +133,6 @@ class MailStorage:
     
     def update_last_login(self, account_id: int):
         """更新账户的上次登录时间"""
-        import time
         cur = self.connection.cursor()
         cur.execute(
             "UPDATE accounts SET last_login = ? WHERE id = ?",

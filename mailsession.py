@@ -9,6 +9,10 @@ from email.header import Header
 from email import encoders
 from email.utils import make_msgid
 from mailstorage import MailStorage
+from email import message_from_string
+from email.utils import parseaddr, getaddresses, parsedate_to_datetime
+import datetime,time
+from email.header import decode_header
 
 class MailSession:
     def __init__(self, smtp_server:str, smtp_port:int, smtp_is_ssl:bool, pop3_server:str, pop3_port:int, pop3_is_ssl:bool, user_mail:str, username:str, password:str, storage: MailStorage = None):
@@ -159,10 +163,6 @@ class MailSession:
         return headers
     
     def _parse_email_header(self, raw_header:str) -> dict:
-        from email import message_from_string
-        from email.utils import parseaddr, getaddresses, parsedate_to_datetime
-        import datetime,time
-        
         msg = message_from_string(raw_header)
         sender_name, sender_address = parseaddr(msg.get('From', ''))
         sender_display = self._decode_field(msg.get('From', ''))
@@ -191,7 +191,7 @@ class MailSession:
         return header_info
     
     def _decode_field(self, value:str) -> str:
-        from email.header import decode_header
+        
         if not value:
             return ''
         decoded_parts = decode_header(value)
