@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mailclientLliAmX.ui'
+## Form generated from reading UI file 'mailclientVUKtOa.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.2
 ##
@@ -209,6 +209,11 @@ class Ui_MainWindows(object):
 
         self.verticalLayout_2.addWidget(self.inboxListWidget)
 
+        self.inboxSyncPushButton = QPushButton(self.inboxPage)
+        self.inboxSyncPushButton.setObjectName(u"inboxSyncPushButton")
+
+        self.verticalLayout_2.addWidget(self.inboxSyncPushButton)
+
         self.mailBoxStackedWidget.addWidget(self.inboxPage)
         self.sentboxPage = QWidget()
         self.sentboxPage.setObjectName(u"sentboxPage")
@@ -286,6 +291,7 @@ class Ui_MainWindows(object):
         self.inboxPushButton.setText(QCoreApplication.translate("MainWindows", u"\u6536\u4fe1\u7bb1", None))
         self.sentboxPushButton.setText(QCoreApplication.translate("MainWindows", u"\u5df2\u53d1\u9001", None))
         self.label_7.setText(QCoreApplication.translate("MainWindows", u"\u6536\u4fe1\u7bb1", None))
+        self.inboxSyncPushButton.setText(QCoreApplication.translate("MainWindows", u"\u540c\u6b65\u6536\u4fe1\u7bb1", None))
         self.label_8.setText(QCoreApplication.translate("MainWindows", u"\u5df2\u53d1\u9001", None))
     # retranslateUi
 

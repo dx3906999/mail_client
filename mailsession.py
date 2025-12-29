@@ -69,7 +69,6 @@ class MailSession:
         msg['Subject'] = Header(subject, 'utf-8').encode()
         if Cc:
             msg['Cc'] = ', '.join(Cc)
-        # 生成并设置 Message-ID 便于数据库去重与追踪
         msg['Message-ID'] = make_msgid(idstring=self.username,domain="localhost")
         
         text_part = MIMEText(body, 'plain', 'utf-8')
@@ -99,9 +98,9 @@ class MailSession:
                 email_id = self.storage.save_full_email(
                     account_id=self.account_id,
                     message_id=message_id,
-                    folder='SENT',
+                    folder='SENTBOX',
                     subject=subject,
-                    sender=msg['From-Name'],
+                    sender=msg.get('From-Name', self.username),
                     sender_address=self.user_mail,
                     receivers_address=receivers_address_str,
                     cc_address=cc_address_str,

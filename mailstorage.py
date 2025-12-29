@@ -3,12 +3,12 @@ import os
 import hashlib
 import json
 from email import message_from_string
+import sys
+sys.stdout.reconfigure(encoding="utf-8")
 
 class MailStorage:
     def __init__(self, db_path:str):
         self.db_path = db_path
-        # 允许跨线程使用同一连接，避免 QThread 中触发 check_same_thread 限制
-        # 当前应用场景下数据库写入集中在同步线程，读取在主线程分时进行，竞争风险较低
         self.connection = sqlite3.connect(self.db_path, check_same_thread=False)
         self.attachment_root = os.path.join(os.path.dirname(db_path), 'attachments')
         os.makedirs(self.attachment_root, exist_ok=True)
@@ -32,7 +32,6 @@ class MailStorage:
             )
         ''')
         
-        # 邮件表（使用INTEGER时间戳便于按时间排序）
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS emails (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,7 +54,6 @@ class MailStorage:
             )
         ''')
         
-        # 附件表
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS attachments (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,7 +67,6 @@ class MailStorage:
             )
         ''')
 
-        # 索引
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_account_id ON emails (account_id)')
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_message_id ON emails (message_id)')
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_date ON emails (date)')
@@ -347,3 +344,8 @@ class MailStorage:
         cur.execute("UPDATE emails SET flagged=? WHERE id=?", (int(flagged), email_id))
         self.connection.commit()
     
+
+if __name__ == "__main__":
+    storage = MailStorage("mailclient.db")
+    emails = storage.get_emails_sorted_by_date(account_id=1, folder='INBOX', limit=10)
+    print(emails)

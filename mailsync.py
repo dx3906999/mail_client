@@ -7,11 +7,10 @@ from mailstorage import MailStorage
 
 
 class MailSync(QObject):
-    # 信号必须定义在类级别，而不是在 __init__ 中
     sync_finished = Signal(int)
     sync_error = Signal(str)
     progress_updated = Signal(int, int, str)
-    sync_canceled = Signal()  # 用户请求取消并被工作线程确认
+    sync_canceled = Signal()
     
     def __init__(self, session: MailSession, storage: MailStorage, account_id: int):
         super().__init__()
@@ -92,7 +91,6 @@ class MailSync(QObject):
                     ext = part.get_content_subtype()
                     filename = f"attachment_{len(attachments) + 1}.{ext}"
                 
-                # 获取附件内容
                 content = part.get_payload(decode=True)
                 if content:
                     content_type = part.get_content_type()
@@ -148,7 +146,6 @@ class MailSync(QObject):
                     has_attachment=has_attachment
                 )
                 
-                # 保存附件
                 for filename, content, content_type, content_id in attachments:
                     self.storage.save_attachment(
                         email_id=email_id,
@@ -161,19 +158,19 @@ class MailSync(QObject):
                 
                 synced_count += 1
                 subject = header.get('Subject', '(无主题)')
-                print(f"✓ 同步邮件: {subject}")
+                # print(f"✓ 同步邮件: {subject}")
                 self.progress_updated.emit(idx + 1, total, f"已同步: {subject}")
             
-            if synced_count > 0:
-                print(f"本次同步完成，新增 {synced_count} 封邮件")
-            else:
-                print("没有新邮件")
+            # if synced_count > 0:
+            #     print(f"本次同步完成，新增 {synced_count} 封邮件")
+            # else:
+            #     print("没有新邮件")
             
             self.sync_finished.emit(synced_count)
                 
         except Exception as e:
             error_msg = f"同步失败: {str(e)}"
-            print(error_msg)
+            # print(error_msg)
             self.sync_error.emit(error_msg)
     
     def request_cancel(self):

@@ -114,6 +114,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="sendMailPushButton">
+       <property name="text">
+        <string>发送</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>

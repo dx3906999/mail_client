@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'maildetailfyEowi.ui'
+## Form generated from reading UI file 'maildetailhFSUWy.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.2
 ##

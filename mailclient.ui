@@ -283,6 +283,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="inboxSyncPushButton">
+           <property name="text">
+            <string>同步收信箱</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="sentboxPage">

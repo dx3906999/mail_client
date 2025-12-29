@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'maileditorcVbbDs.ui'
+## Form generated from reading UI file 'maileditorxMKaPc.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.2
 ##
@@ -100,6 +100,11 @@ class Ui_Form(object):
 
         self.verticalLayout.addWidget(self.attachmentListWidget)
 
+        self.sendMailPushButton = QPushButton(Form)
+        self.sendMailPushButton.setObjectName(u"sendMailPushButton")
+
+        self.verticalLayout.addWidget(self.sendMailPushButton)
+
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
@@ -117,5 +122,6 @@ class Ui_Form(object):
         self.label_3.setText(QCoreApplication.translate("Form", u"\u6284\u9001", None))
         self.label_4.setText(QCoreApplication.translate("Form", u"\u4e3b\u9898", None))
         self.addAttachmentsPushButton.setText(QCoreApplication.translate("Form", u"\u6dfb\u52a0\u9644\u4ef6", None))
+        self.sendMailPushButton.setText(QCoreApplication.translate("Form", u"\u53d1\u9001", None))
     # retranslateUi
 

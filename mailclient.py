@@ -11,6 +11,7 @@ from mailstorage import MailStorage
 from mailsync import MailSync
 from mailinfoframe import MailInfoFrame
 from maildetail import MailDetailFrame
+from maileditor import MailEditorFrame
 
 
 class MailClient(QWidget):
@@ -19,6 +20,7 @@ class MailClient(QWidget):
         self.mail_session = None
         self.mail_storage = None
         self.mail_sync = None
+        self.db_path = 'mailclient.db'
         self.sync_thread = None
         self.inbox_mail_frames = []
         self.sentbox_mail_frames = []
@@ -32,8 +34,9 @@ class MailClient(QWidget):
         self.ui.logInOutPushButton.clicked.connect(self.on_logInOutPushButton_clicked)
         self.ui.inboxPushButton.clicked.connect(self.on_inboxPushButton_clicked)
         self.ui.sentboxPushButton.clicked.connect(self.on_sentboxPushButton_clicked)
+        self.ui.writeEmailPushButton.clicked.connect(self.on_writeEmailPushButton_clicked)
+        self.ui.inboxSyncPushButton.clicked.connect(self.on_inboxSyncPushButton_clicked)
         
-        # 连接标签页关闭信号
         self.ui.mailsTabWidget.tabCloseRequested.connect(self.on_tab_close_requested)
 
         self.ui.inboxListWidget.setSelectionMode(QAbstractItemView.NoSelection)
@@ -42,25 +45,12 @@ class MailClient(QWidget):
         self.ui.sentboxListWidget.setSelectionMode(QAbstractItemView.NoSelection)
         self.ui.sentboxListWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.ui.sentboxListWidget.setSpacing(4)
+        self.ui.writeEmailPushButton.setEnabled(False)
+        self.ui.inboxSyncPushButton.setEnabled(False)
         
-        # 加载上次登录的用户信息
         self.load_last_login_info()
 
-        # 演示数据：创建并添加到收件箱 QListWidget
-        for i in range(10):
-            frame = MailInfoFrame(
-                email_id=i,
-                mail_name="测试邮件发件人",
-                mail_subject="这是一个测试邮件的主题，用于测试邮件客户端的显示效果",
-                mail_date="2024-10-01",
-                is_read=False
-            )
-            self.inbox_mail_frames.append(frame)
-            frame.clicked.connect(lambda eid=i: self.on_mailInfoFrame_clicked(eid))
-            item = QListWidgetItem(self.ui.inboxListWidget)
-            item.setSizeHint(frame.sizeHint())
-            self.ui.inboxListWidget.addItem(item)
-            self.ui.inboxListWidget.setItemWidget(item, frame)
+
 
     def load_emails(self, folder: str = 'INBOX', list_widget=None, frames_list=None):
         """
@@ -74,13 +64,11 @@ class MailClient(QWidget):
         if not self.mail_storage or not self.mail_session:
             return
         
-        # 清空现有数据
         if list_widget:
             list_widget.clear()
         if frames_list is not None:
             frames_list.clear()
         
-        # 从数据库查询邮件，最新的在前
         emails = self.mail_storage.get_emails_sorted_by_date(
             account_id=self.mail_session.account_id,
             folder=folder,
@@ -111,7 +99,7 @@ class MailClient(QWidget):
     
     def load_last_login_info(self):
         """从数据库加载上次登录的用户信息到UI"""
-        temp_storage = MailStorage("mailclient.db")
+        temp_storage = MailStorage(self.db_path)
         last_login = temp_storage.get_last_login_account()
         temp_storage.close()
         
@@ -195,7 +183,7 @@ class MailClient(QWidget):
 
             self.ui.logInOutPushButton.setEnabled(False)
 
-            self.mail_storage = MailStorage("mailclient.db")
+            self.mail_storage = MailStorage(self.db_path)
             self.mail_session.storage = self.mail_storage
             self.mail_session.account_id = self.mail_storage.get_account_id(user_mail)
             if not self.mail_session.account_id:
@@ -210,20 +198,15 @@ class MailClient(QWidget):
                     pop3_ssl=pop3_is_ssl
                 )
             
-            # 更新上次登录时间
             self.mail_storage.update_last_login(self.mail_session.account_id)
             
-            self.mail_sync = MailSync(self.mail_session, self.mail_storage, self.mail_session.account_id)
-            
-            # 从数据库加载已有的邮件
-            # self.load_emails('INBOX', self.ui.inboxListWidget, self.inbox_mail_frames)
             self.load_emails('SENTBOX', self.ui.sentboxListWidget, self.sentbox_mail_frames)
-            
-            # 启动同步并显示进度条
             self.start_sync()
             
             self.ui.logInOutPushButton.setEnabled(True)
             self.ui.logInOutPushButton.setText("登出")
+            self.ui.writeEmailPushButton.setEnabled(True)
+            self.ui.inboxSyncPushButton.setEnabled(True)
         else:
 
             reply = QMessageBox.question(self, "提示", "确定要登出吗？", QMessageBox.Yes | QMessageBox.No)
@@ -237,7 +220,6 @@ class MailClient(QWidget):
             self.mail_storage = None
             self.mail_sync = None
 
-            # 清空邮件列表
             self.clear_mail_lists()
 
             # TODO：取消tab页中的邮件显示
@@ -252,6 +234,8 @@ class MailClient(QWidget):
             self.ui.pop3ServerLineEdit.setEnabled(True)
             self.ui.pop3PortLineEdit.setEnabled(True)
             self.ui.isPop3sslCheckBox.setEnabled(True)
+            self.ui.writeEmailPushButton.setEnabled(False)
+            self.ui.inboxSyncPushButton.setEnabled(False)
 
             self.ui.logInOutPushButton.setText("登录")
 
@@ -266,15 +250,12 @@ class MailClient(QWidget):
         if not self.mail_storage:
             return
         
-        # 检查邮件是否已在某个 tab 中打开
         for i in range(self.ui.mailsTabWidget.count()):
             tab_widget = self.ui.mailsTabWidget.widget(i)
             if isinstance(tab_widget, MailDetailFrame) and tab_widget.email_id == email_id:
-                # 邮件已打开，切换到该 tab
                 self.ui.mailsTabWidget.setCurrentIndex(i)
                 return
         
-        # 从数据库获取邮件详情
         email_detail = self.mail_storage.get_email_detail(email_id)
         if not email_detail:
             QMessageBox.warning(self, "提示", "无法获取邮件详情")
@@ -283,7 +264,6 @@ class MailClient(QWidget):
         (email_db_id, subject, sender, sender_address, receivers_address, 
          cc_address, date, body_text, body_html, read, flagged, has_attachment, received_date) = email_detail
         
-        # 创建邮件详情框架
         detail_frame = MailDetailFrame(
             account_id=self.mail_session.account_id,
             email_id=email_id,
@@ -295,28 +275,31 @@ class MailClient(QWidget):
             has_attachments=bool(has_attachment)
         )
         
-        # tab 标题：超过15个字符则省略
         tab_title = subject or "(无主题)"
         if len(tab_title) > 15:
             font_metrics = QFontMetrics(self.ui.mailsTabWidget.font())
             tab_title = font_metrics.elidedText(tab_title, Qt.ElideRight, 100)
         
-        # 添加到 tab widget
         tab_index = self.ui.mailsTabWidget.addTab(detail_frame, tab_title)
-        
-        # 切换到新 tab
+
         self.ui.mailsTabWidget.setCurrentIndex(tab_index)
 
         self.mail_storage.mark_email_as_read(email_id, True)
     
     def on_tab_close_requested(self, index: int):
+        widget = self.ui.mailsTabWidget.widget(index)
         self.ui.mailsTabWidget.removeTab(index)
+        # 关闭写信编辑器标签后，恢复“写信”按钮
+        if isinstance(widget, MailEditorFrame):
+            self.ui.writeEmailPushButton.setEnabled(True)
+        if widget:
+            widget.deleteLater()
     
     def start_sync(self):
-        if not self.mail_sync:
+        """启动一次同步任务。每次创建全新的worker以避免线程归属问题。"""
+        if not self.mail_session or not self.mail_storage:
             return
         
-        # 创建进度对话框
         self.progress_dialog = QProgressDialog("准备同步邮件...", "取消", 0, 100, self)
         self.progress_dialog.setWindowTitle("同步邮件")
         self.progress_dialog.setWindowModality(Qt.WindowModal)
@@ -324,16 +307,18 @@ class MailClient(QWidget):
         self.progress_dialog.setAutoClose(True)
         self.progress_dialog.setAutoReset(True)
         
-        # 创建线程
-        self.sync_thread = QThread()
+        self.sync_thread = QThread(self)
+        self.mail_sync = MailSync(self.mail_session, self.mail_storage, self.mail_session.account_id)
         self.mail_sync.moveToThread(self.sync_thread)
         
+        # 连接信号槽
         self.sync_thread.started.connect(self.mail_sync.sync_once)
         self.mail_sync.progress_updated.connect(self.on_sync_progress)
         self.mail_sync.sync_finished.connect(self.on_sync_finished)
         self.mail_sync.sync_error.connect(self.on_sync_error)
         self.mail_sync.sync_canceled.connect(self.on_sync_canceled)
         self.progress_dialog.canceled.connect(self.mail_sync.request_cancel)
+        self.sync_thread.finished.connect(self.mail_sync.deleteLater)
         
         self.sync_thread.start()
     
@@ -355,6 +340,10 @@ class MailClient(QWidget):
             self.progress_dialog.close()
             self.progress_dialog = None
         
+        # 同步成功后恢复按钮可用，并清理worker引用
+        self.ui.inboxSyncPushButton.setEnabled(True)
+        self.mail_sync = None
+        
         # 同步完成后刷新邮件列表
         self.load_emails('INBOX', self.ui.inboxListWidget, self.inbox_mail_frames)
         
@@ -373,6 +362,11 @@ class MailClient(QWidget):
             self.progress_dialog.close()
             self.progress_dialog = None
         
+        # 同步失败后恢复按钮可用
+        self.ui.inboxSyncPushButton.setEnabled(True)
+        # 清理worker引用
+        self.mail_sync = None
+
         QMessageBox.critical(self, "同步失败", error_msg)
     
     def on_sync_canceled(self):
@@ -386,7 +380,56 @@ class MailClient(QWidget):
             self.progress_dialog.close()
             self.progress_dialog = None
         
+        # 取消后恢复按钮可用
+        self.ui.inboxSyncPushButton.setEnabled(True)
+        # 清理worker引用
+        self.mail_sync = None
+
         QMessageBox.information(self, "已取消", "邮件同步已取消")
+
+    def on_inboxSyncPushButton_clicked(self):
+        """手动触发收件箱同步"""
+        if not self.mail_session or not self.mail_storage:
+            QMessageBox.warning(self, "提示", "请先登录邮箱再同步")
+            return
+        # 防止重复同步
+        if self.sync_thread and self.sync_thread.isRunning():
+            QMessageBox.information(self, "提示", "正在同步中，请稍候")
+            return
+        # 同步期间禁用按钮，完成/失败/取消时在对应回调中恢复
+        self.ui.inboxSyncPushButton.setEnabled(False)
+        self.start_sync()
+
+    def on_writeEmailPushButton_clicked(self):
+        editor = MailEditorFrame(self.mail_session)
+        editor.send_successful.connect(self.on_send_email_successful)
+        tab_index = self.ui.mailsTabWidget.addTab(editor, "新建邮件")
+        self.ui.mailsTabWidget.setCurrentIndex(tab_index)
+        self.ui.writeEmailPushButton.setEnabled(False)
+
+    def on_send_email_successful(self):
+        current_index = self.ui.mailsTabWidget.currentIndex()
+        current_widget = self.ui.mailsTabWidget.widget(current_index)
+        if isinstance(current_widget, MailEditorFrame):
+            self.ui.mailsTabWidget.removeTab(current_index)
+            current_widget.deleteLater()
+            self.ui.writeEmailPushButton.setEnabled(True)
+            self.load_emails('SENTBOX', self.ui.sentboxListWidget, self.sentbox_mail_frames)
+
+    def closeEvent(self, event):
+        if self.mail_session:
+            self.mail_session.close_smtp_connections()
+            self.mail_session.close_pop3_connections()
+        
+        if self.mail_storage:
+            self.mail_storage.close()
+        
+        if self.sync_thread:
+            self.mail_sync.request_cancel()
+            self.sync_thread.quit()
+            self.sync_thread.wait()
+            self.sync_thread = None 
+        super().closeEvent(event)
 
 if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
