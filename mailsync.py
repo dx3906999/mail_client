@@ -121,8 +121,14 @@ class MailSync(QObject):
                     continue
                 
                 raw_email = self.session.fetch_email(idx)
-                body_text, body_html = self.parse_email_body(raw_email)
-                attachments = self.extract_attachments(raw_email)
+                if not raw_email:
+                    # 若拉取失败则跳过该邮件
+                    continue
+
+                parse_result = self.parse_email_body(raw_email)
+                body_text, body_html = parse_result if parse_result else ('', '')
+
+                attachments = self.extract_attachments(raw_email) or []
                 has_attachment = len(attachments) > 0
                 
                 receivers_addresses = header.get('To-Addresses', [])
@@ -145,7 +151,10 @@ class MailSync(QObject):
                     has_attachment=has_attachment
                 )
                 
-                for filename, content, content_type, content_id in attachments:
+                for attachment in attachments:
+                    if not attachment or len(attachment) != 4:
+                        continue
+                    filename, content, content_type, content_id = attachment
                     self.storage.save_attachment(
                         email_id=email_id,
                         account_id=self.account_id,

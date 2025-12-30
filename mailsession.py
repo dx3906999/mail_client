@@ -172,9 +172,20 @@ class MailSession:
         cc_list = getaddresses([msg.get('Cc', '')])
         cc_addresses = [addr for name, addr in cc_list if addr]
         cc_display = self._decode_field(msg.get('Cc', ''))
-        date = parsedate_to_datetime(msg.get('Date', ''))
-        struct_time = date.timetuple()
-        timestamp = int(time.mktime(struct_time))
+        
+        # 清理日期字符串，移除括号注释（如 "(GMT+08:00)"）
+        date_str = msg.get('Date', '')
+        if '(' in date_str:
+            date_str = date_str[:date_str.index('(')].strip()
+        
+        date = parsedate_to_datetime(date_str) if date_str else None
+        
+        if date:
+            struct_time = date.timetuple()
+            timestamp = int(time.mktime(struct_time))
+        else:
+            # 日期解析失败时使用当前时间
+            timestamp = int(time.time())
         
         header_info = {
             'From': sender_display,

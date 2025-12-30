@@ -208,6 +208,7 @@ class MailClient(QWidget):
             self.mail_storage.update_last_login(self.mail_session.account_id)
             
             self.load_emails('SENTBOX', self.ui.sentboxListWidget, self.sentbox_mail_frames)
+            self.load_emails('INBOX', self.ui.inboxListWidget, self.inbox_mail_frames)
             self.start_sync()
             
             self.ui.logInOutPushButton.setText("登出")
@@ -219,8 +220,12 @@ class MailClient(QWidget):
             if reply == QMessageBox.No:
                 return
 
-            self.mail_session.close_smtp_connections()
-            self.mail_session.close_pop3_connections()
+            try:
+                self.mail_session.close_smtp_connections()
+                self.mail_session.close_pop3_connections()
+            except Exception:
+                pass
+
             self.mail_session = None
             self.mail_storage.close()
             self.mail_storage = None
@@ -329,12 +334,14 @@ class MailClient(QWidget):
         self.sync_thread.start()
     
     def on_sync_progress(self, current: int, total: int, message: str):
-        if self.progress_dialog:
-            self.progress_dialog.setMaximum(total)
-            self.progress_dialog.setValue(current)
-            font_metrics = QFontMetrics(self.progress_dialog.font())
-            elided_message = font_metrics.elidedText(message, Qt.ElideRight, 300)
-            self.progress_dialog.setLabelText(elided_message)
+        dialog = self.progress_dialog
+        if not dialog:
+            return
+        dialog.setMaximum(total)
+        dialog.setValue(current)
+        font_metrics = QFontMetrics(dialog.font())
+        elided_message = font_metrics.elidedText(message, Qt.ElideRight, 300)
+        dialog.setLabelText(elided_message)
     
     def on_sync_finished(self, synced_count: int):
         if self.sync_thread:
@@ -442,6 +449,7 @@ class MailClient(QWidget):
 
 if __name__ == "__main__":
     app = QApplication([])
+    app.setWindowIcon(QIcon("app_icon.png"))
     window = MailClient()
     window.show()
     sys.exit(app.exec())
