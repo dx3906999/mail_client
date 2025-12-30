@@ -21,9 +21,10 @@ class MailDetailFrame(QFrame):
         self.ui.subjectLabel.setText(elided_subject)
 
         if is_html:
-            self.ui.textBrowser.setHtml(mail_content)
+            self.ui.webEngineView.setHtml(mail_content)
         else:
-            self.ui.textBrowser.setPlainText(mail_content)
+            plain_html = f"<pre style='white-space: pre-wrap; word-wrap: break-word; font-family: monospace;'>{mail_content}</pre>"
+            self.ui.webEngineView.setHtml(plain_html)
         
         if has_attachments:
             self.ui.attachmentPushButton.setEnabled(True)

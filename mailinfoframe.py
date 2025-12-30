@@ -61,9 +61,8 @@ class MailInfoFrame(QFrame):
 
 if __name__ == "__main__":
     import sys
-    from PySide2.QtWidgets import QApplication
-    from PySide2.QtCore import QCoreApplication, Qt
-    QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+    from PySide6.QtWidgets import QApplication
+    from PySide6.QtCore import QCoreApplication, Qt
     app = QApplication(sys.argv)
     frame = MailInfoFrame(1,"Alice <alice@example.com>", "Meeting Reminder asasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd", "2024-06-01", False)
     frame.show()
