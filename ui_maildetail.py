@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'maildetailhFSUWy.ui'
+## Form generated from reading UI file 'maildetailHcRbow.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.14.2
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
-    QObject, QPoint, QRect, QSize, QTime, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
-    QPixmap, QRadialGradient)
-from PySide2.QtWidgets import *
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QLabel,
+    QPushButton, QSizePolicy, QTextBrowser, QVBoxLayout,
+    QWidget)
 
 class Ui_Frame(object):
     def setupUi(self, Frame):
@@ -30,35 +33,35 @@ class Ui_Frame(object):
         self.label = QLabel(Frame)
         self.label.setObjectName(u"label")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label)
 
         self.senderLabel = QLabel(Frame)
         self.senderLabel.setObjectName(u"senderLabel")
-        self.senderLabel.setTextFormat(Qt.MarkdownText)
+        self.senderLabel.setTextFormat(Qt.TextFormat.MarkdownText)
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.senderLabel)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.senderLabel)
 
         self.label_3 = QLabel(Frame)
         self.label_3.setObjectName(u"label_3")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_3)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label_3)
 
         self.receiverLabel = QLabel(Frame)
         self.receiverLabel.setObjectName(u"receiverLabel")
-        self.receiverLabel.setTextFormat(Qt.MarkdownText)
+        self.receiverLabel.setTextFormat(Qt.TextFormat.MarkdownText)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.receiverLabel)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.receiverLabel)
 
         self.label_5 = QLabel(Frame)
         self.label_5.setObjectName(u"label_5")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_5)
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.label_5)
 
         self.subjectLabel = QLabel(Frame)
         self.subjectLabel.setObjectName(u"subjectLabel")
-        self.subjectLabel.setTextFormat(Qt.MarkdownText)
+        self.subjectLabel.setTextFormat(Qt.TextFormat.MarkdownText)
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.subjectLabel)
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.subjectLabel)
 
 
         self.verticalLayout.addLayout(self.formLayout)

@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mailclientVUKtOa.ui'
+## Form generated from reading UI file 'mailclientBkxMRq.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.14.2
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
-    QObject, QPoint, QRect, QSize, QTime, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
-    QPixmap, QRadialGradient)
-from PySide2.QtWidgets import *
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFormLayout, QFrame,
+    QGroupBox, QHBoxLayout, QLabel, QLayout,
+    QLineEdit, QListWidget, QListWidgetItem, QPushButton,
+    QSizePolicy, QSpacerItem, QStackedWidget, QTabWidget,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindows(object):
     def setupUi(self, MainWindows):
@@ -28,7 +33,7 @@ class Ui_MainWindows(object):
         self.leftVerticalLayout = QVBoxLayout()
         self.leftVerticalLayout.setSpacing(0)
         self.leftVerticalLayout.setObjectName(u"leftVerticalLayout")
-        self.leftVerticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.leftVerticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
         self.userInfoGroupBox = QGroupBox(MainWindows)
         self.userInfoGroupBox.setObjectName(u"userInfoGroupBox")
         self.verticalLayout = QVBoxLayout(self.userInfoGroupBox)
@@ -40,99 +45,99 @@ class Ui_MainWindows(object):
         self.userNameLabel = QLabel(self.userInfoGroupBox)
         self.userNameLabel.setObjectName(u"userNameLabel")
 
-        self.userInfoFormLayout.setWidget(0, QFormLayout.LabelRole, self.userNameLabel)
+        self.userInfoFormLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.userNameLabel)
 
         self.userMailLabel = QLabel(self.userInfoGroupBox)
         self.userMailLabel.setObjectName(u"userMailLabel")
 
-        self.userInfoFormLayout.setWidget(1, QFormLayout.LabelRole, self.userMailLabel)
+        self.userInfoFormLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.userMailLabel)
 
         self.passwordlabel = QLabel(self.userInfoGroupBox)
         self.passwordlabel.setObjectName(u"passwordlabel")
 
-        self.userInfoFormLayout.setWidget(2, QFormLayout.LabelRole, self.passwordlabel)
+        self.userInfoFormLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.passwordlabel)
 
         self.label_2 = QLabel(self.userInfoGroupBox)
         self.label_2.setObjectName(u"label_2")
 
-        self.userInfoFormLayout.setWidget(3, QFormLayout.LabelRole, self.label_2)
+        self.userInfoFormLayout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.label_2)
 
         self.label_3 = QLabel(self.userInfoGroupBox)
         self.label_3.setObjectName(u"label_3")
 
-        self.userInfoFormLayout.setWidget(4, QFormLayout.LabelRole, self.label_3)
+        self.userInfoFormLayout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.label_3)
 
         self.label_4 = QLabel(self.userInfoGroupBox)
         self.label_4.setObjectName(u"label_4")
 
-        self.userInfoFormLayout.setWidget(6, QFormLayout.LabelRole, self.label_4)
+        self.userInfoFormLayout.setWidget(6, QFormLayout.ItemRole.LabelRole, self.label_4)
 
         self.label = QLabel(self.userInfoGroupBox)
         self.label.setObjectName(u"label")
 
-        self.userInfoFormLayout.setWidget(7, QFormLayout.LabelRole, self.label)
+        self.userInfoFormLayout.setWidget(7, QFormLayout.ItemRole.LabelRole, self.label)
 
         self.label_5 = QLabel(self.userInfoGroupBox)
         self.label_5.setObjectName(u"label_5")
 
-        self.userInfoFormLayout.setWidget(8, QFormLayout.LabelRole, self.label_5)
+        self.userInfoFormLayout.setWidget(8, QFormLayout.ItemRole.LabelRole, self.label_5)
 
         self.label_6 = QLabel(self.userInfoGroupBox)
         self.label_6.setObjectName(u"label_6")
 
-        self.userInfoFormLayout.setWidget(5, QFormLayout.LabelRole, self.label_6)
+        self.userInfoFormLayout.setWidget(5, QFormLayout.ItemRole.LabelRole, self.label_6)
 
         self.pop3PortLineEdit = QLineEdit(self.userInfoGroupBox)
         self.pop3PortLineEdit.setObjectName(u"pop3PortLineEdit")
 
-        self.userInfoFormLayout.setWidget(7, QFormLayout.FieldRole, self.pop3PortLineEdit)
+        self.userInfoFormLayout.setWidget(7, QFormLayout.ItemRole.FieldRole, self.pop3PortLineEdit)
 
         self.pop3ServerLineEdit = QLineEdit(self.userInfoGroupBox)
         self.pop3ServerLineEdit.setObjectName(u"pop3ServerLineEdit")
 
-        self.userInfoFormLayout.setWidget(6, QFormLayout.FieldRole, self.pop3ServerLineEdit)
+        self.userInfoFormLayout.setWidget(6, QFormLayout.ItemRole.FieldRole, self.pop3ServerLineEdit)
 
         self.smtpPortLineEdit = QLineEdit(self.userInfoGroupBox)
         self.smtpPortLineEdit.setObjectName(u"smtpPortLineEdit")
 
-        self.userInfoFormLayout.setWidget(4, QFormLayout.FieldRole, self.smtpPortLineEdit)
+        self.userInfoFormLayout.setWidget(4, QFormLayout.ItemRole.FieldRole, self.smtpPortLineEdit)
 
         self.smtpServerLineEdit = QLineEdit(self.userInfoGroupBox)
         self.smtpServerLineEdit.setObjectName(u"smtpServerLineEdit")
 
-        self.userInfoFormLayout.setWidget(3, QFormLayout.FieldRole, self.smtpServerLineEdit)
+        self.userInfoFormLayout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.smtpServerLineEdit)
 
         self.passwordLineEdit = QLineEdit(self.userInfoGroupBox)
         self.passwordLineEdit.setObjectName(u"passwordLineEdit")
-        self.passwordLineEdit.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+        self.passwordLineEdit.setEchoMode(QLineEdit.EchoMode.PasswordEchoOnEdit)
 
-        self.userInfoFormLayout.setWidget(2, QFormLayout.FieldRole, self.passwordLineEdit)
+        self.userInfoFormLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.passwordLineEdit)
 
         self.usernameLineEdit = QLineEdit(self.userInfoGroupBox)
         self.usernameLineEdit.setObjectName(u"usernameLineEdit")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.usernameLineEdit.sizePolicy().hasHeightForWidth())
         self.usernameLineEdit.setSizePolicy(sizePolicy)
         self.usernameLineEdit.setMinimumSize(QSize(0, 0))
 
-        self.userInfoFormLayout.setWidget(0, QFormLayout.FieldRole, self.usernameLineEdit)
+        self.userInfoFormLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.usernameLineEdit)
 
         self.usermailLineEdit = QLineEdit(self.userInfoGroupBox)
         self.usermailLineEdit.setObjectName(u"usermailLineEdit")
 
-        self.userInfoFormLayout.setWidget(1, QFormLayout.FieldRole, self.usermailLineEdit)
+        self.userInfoFormLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.usermailLineEdit)
 
         self.isSmtpsslCheckBox = QCheckBox(self.userInfoGroupBox)
         self.isSmtpsslCheckBox.setObjectName(u"isSmtpsslCheckBox")
 
-        self.userInfoFormLayout.setWidget(5, QFormLayout.FieldRole, self.isSmtpsslCheckBox)
+        self.userInfoFormLayout.setWidget(5, QFormLayout.ItemRole.FieldRole, self.isSmtpsslCheckBox)
 
         self.isPop3sslCheckBox = QCheckBox(self.userInfoGroupBox)
         self.isPop3sslCheckBox.setObjectName(u"isPop3sslCheckBox")
 
-        self.userInfoFormLayout.setWidget(8, QFormLayout.FieldRole, self.isPop3sslCheckBox)
+        self.userInfoFormLayout.setWidget(8, QFormLayout.ItemRole.FieldRole, self.isPop3sslCheckBox)
 
 
         self.userInfoVerticalLayout.addLayout(self.userInfoFormLayout)
@@ -151,7 +156,7 @@ class Ui_MainWindows(object):
         self.writeEmailPushButton = QPushButton(MainWindows)
         self.writeEmailPushButton.setObjectName(u"writeEmailPushButton")
         self.writeEmailPushButton.setEnabled(True)
-        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.writeEmailPushButton.sizePolicy().hasHeightForWidth())
@@ -176,7 +181,7 @@ class Ui_MainWindows(object):
 
         self.leftVerticalLayout.addWidget(self.sentboxPushButton)
 
-        self.verticalSpacer = QSpacerItem(20, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.leftVerticalLayout.addItem(self.verticalSpacer)
 
@@ -185,14 +190,14 @@ class Ui_MainWindows(object):
 
         self.mailBoxStackedWidget = QStackedWidget(MainWindows)
         self.mailBoxStackedWidget.setObjectName(u"mailBoxStackedWidget")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.mailBoxStackedWidget.sizePolicy().hasHeightForWidth())
         self.mailBoxStackedWidget.setSizePolicy(sizePolicy2)
         self.mailBoxStackedWidget.setMinimumSize(QSize(280, 0))
         self.mailBoxStackedWidget.setMaximumSize(QSize(320, 16777215))
-        self.mailBoxStackedWidget.setFrameShadow(QFrame.Plain)
+        self.mailBoxStackedWidget.setFrameShadow(QFrame.Shadow.Plain)
         self.inboxPage = QWidget()
         self.inboxPage.setObjectName(u"inboxPage")
         self.verticalLayout_2 = QVBoxLayout(self.inboxPage)
@@ -204,8 +209,8 @@ class Ui_MainWindows(object):
 
         self.inboxListWidget = QListWidget(self.inboxPage)
         self.inboxListWidget.setObjectName(u"inboxListWidget")
-        self.inboxListWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.inboxListWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.inboxListWidget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.inboxListWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.verticalLayout_2.addWidget(self.inboxListWidget)
 
@@ -226,8 +231,8 @@ class Ui_MainWindows(object):
 
         self.sentboxListWidget = QListWidget(self.sentboxPage)
         self.sentboxListWidget.setObjectName(u"sentboxListWidget")
-        self.sentboxListWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.sentboxListWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.sentboxListWidget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.sentboxListWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.verticalLayout_3.addWidget(self.sentboxListWidget)
 

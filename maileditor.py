@@ -1,6 +1,6 @@
 from ui_maileditor import Ui_Form
-from PySide2.QtWidgets import QFrame, QFileDialog, QListWidgetItem, QMessageBox
-from PySide2.QtCore import Qt, Signal
+from PySide6.QtWidgets import QFrame, QFileDialog, QListWidgetItem, QMessageBox
+from PySide6.QtCore import Qt, Signal
 from mailsession import MailSession
 import re
 import os

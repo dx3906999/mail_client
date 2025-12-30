@@ -1,9 +1,5 @@
 import sqlite3
 import os
-import hashlib
-import json
-from email import message_from_string
-import sys
 import time
 
 

@@ -1,7 +1,6 @@
-import time
 from email import message_from_string
 from email.header import decode_header
-from PySide2.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Signal
 from mailsession import MailSession
 from mailstorage import MailStorage
 

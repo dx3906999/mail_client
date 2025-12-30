@@ -1,7 +1,7 @@
 from ui_maildetail import Ui_Frame
-from PySide2.QtWidgets import QFrame
-from PySide2.QtCore import Qt, QStandardPaths, QUrl
-from PySide2.QtGui import QFontMetrics, QFont, QDesktopServices
+from PySide6.QtWidgets import QFrame
+from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QFontMetrics, QDesktopServices
 import os
 
 

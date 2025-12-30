@@ -1,6 +1,6 @@
-from PySide2.QtCore import Qt, Signal
-from PySide2.QtGui import QCursor, QFontMetrics, QFont
-from PySide2.QtWidgets import QFrame, QApplication
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QCursor, QFontMetrics, QFont
+from PySide6.QtWidgets import QFrame, QApplication
 from ui_mailinfoframe import Ui_Frame
 
 class MailInfoFrame(QFrame):

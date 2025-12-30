@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'maileditorxMKaPc.ui'
+## Form generated from reading UI file 'maileditorAdyRxF.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.14.2
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
-    QObject, QPoint, QRect, QSize, QTime, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
-    QPixmap, QRadialGradient)
-from PySide2.QtWidgets import *
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QFormLayout, QHBoxLayout, QLabel,
+    QLineEdit, QListWidget, QListWidgetItem, QPushButton,
+    QSizePolicy, QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -30,49 +33,49 @@ class Ui_Form(object):
         self.label = QLabel(Form)
         self.label.setObjectName(u"label")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label)
 
         self.senderLabel = QLabel(Form)
         self.senderLabel.setObjectName(u"senderLabel")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.senderLabel.sizePolicy().hasHeightForWidth())
         self.senderLabel.setSizePolicy(sizePolicy)
         self.senderLabel.setMinimumSize(QSize(0, 19))
-        self.senderLabel.setTextFormat(Qt.MarkdownText)
+        self.senderLabel.setTextFormat(Qt.TextFormat.MarkdownText)
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.senderLabel)
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.senderLabel)
 
         self.label_2 = QLabel(Form)
         self.label_2.setObjectName(u"label_2")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label_2)
 
         self.senderLineEdit = QLineEdit(Form)
         self.senderLineEdit.setObjectName(u"senderLineEdit")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.senderLineEdit)
+        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.senderLineEdit)
 
         self.label_3 = QLabel(Form)
         self.label_3.setObjectName(u"label_3")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.label_3)
 
         self.ccLineEdit = QLineEdit(Form)
         self.ccLineEdit.setObjectName(u"ccLineEdit")
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.ccLineEdit)
+        self.formLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.ccLineEdit)
 
         self.label_4 = QLabel(Form)
         self.label_4.setObjectName(u"label_4")
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_4)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.label_4)
 
         self.subjectLineEdit = QLineEdit(Form)
         self.subjectLineEdit.setObjectName(u"subjectLineEdit")
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.subjectLineEdit)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.subjectLineEdit)
 
 
         self.verticalLayout.addLayout(self.formLayout)
@@ -89,14 +92,14 @@ class Ui_Form(object):
 
         self.attachmentListWidget = QListWidget(Form)
         self.attachmentListWidget.setObjectName(u"attachmentListWidget")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.attachmentListWidget.sizePolicy().hasHeightForWidth())
         self.attachmentListWidget.setSizePolicy(sizePolicy1)
         self.attachmentListWidget.setMinimumSize(QSize(0, 50))
         self.attachmentListWidget.setMaximumSize(QSize(16777215, 100))
-        self.attachmentListWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.attachmentListWidget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
 
         self.verticalLayout.addWidget(self.attachmentListWidget)
 

@@ -2,9 +2,9 @@
 import sys,os
 from datetime import datetime
 from smtplib import SMTPAuthenticationError
-from PySide2.QtWidgets import QApplication, QWidget, QMessageBox, QListWidgetItem, QAbstractItemView, QProgressDialog
-from PySide2.QtCore import QCoreApplication, Qt, QThread
-from PySide2.QtGui import QFont, QFontMetrics, QCursor, QIcon
+from PySide6.QtWidgets import QApplication, QWidget, QMessageBox, QListWidgetItem, QAbstractItemView, QProgressDialog
+from PySide6.QtCore import Qt, QThread
+from PySide6.QtGui import QFontMetrics,QIcon
 from ui_mailclient import Ui_MainWindows
 from mailsession import MailSession
 from mailstorage import MailStorage
@@ -210,7 +210,6 @@ class MailClient(QWidget):
             self.load_emails('SENTBOX', self.ui.sentboxListWidget, self.sentbox_mail_frames)
             self.start_sync()
             
-            self.ui.logInOutPushButton.setEnabled(True)
             self.ui.logInOutPushButton.setText("登出")
             self.ui.writeEmailPushButton.setEnabled(True)
             self.ui.inboxSyncPushButton.setEnabled(True)
@@ -349,6 +348,7 @@ class MailClient(QWidget):
         
         # 同步成功后恢复按钮可用，并清理worker引用
         self.ui.inboxSyncPushButton.setEnabled(True)
+        self.ui.logInOutPushButton.setEnabled(True)
         self.mail_sync = None
         
         # 同步完成后刷新邮件列表
@@ -371,6 +371,7 @@ class MailClient(QWidget):
         
         # 同步失败后恢复按钮可用
         self.ui.inboxSyncPushButton.setEnabled(True)
+        self.ui.logInOutPushButton.setEnabled(True)
         # 清理worker引用
         self.mail_sync = None
 
@@ -389,6 +390,7 @@ class MailClient(QWidget):
         
         # 取消后恢复按钮可用
         self.ui.inboxSyncPushButton.setEnabled(True)
+        self.ui.logInOutPushButton.setEnabled(True)
         # 清理worker引用
         self.mail_sync = None
 
@@ -439,8 +441,7 @@ class MailClient(QWidget):
         super().closeEvent(event)
 
 if __name__ == "__main__":
-    QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication([])
     window = MailClient()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
