@@ -8,6 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+import sys
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -15,7 +16,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWebEngineWidgets import QWebEngineView
+
+# 根据平台选择不同的组件
+if sys.platform == 'win32':
+    from PySide6.QtWebEngineWidgets import QWebEngineView
+else:
+    from PySide6.QtWidgets import QTextBrowser
+
 from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QLabel,
     QPushButton, QSizePolicy, QVBoxLayout, QWidget)
 
@@ -66,9 +73,15 @@ class Ui_Frame(object):
 
         self.verticalLayout.addLayout(self.formLayout)
 
-        self.webEngineView = QWebEngineView(Frame)
-        self.webEngineView.setObjectName(u"webEngineView")
-        self.webEngineView.setUrl(QUrl(u"about:blank"))
+        # 根据平台创建不同的组件
+        if sys.platform == 'win32':
+            self.webEngineView = QWebEngineView(Frame)
+            self.webEngineView.setObjectName(u"webEngineView")
+            self.webEngineView.setUrl(QUrl(u"about:blank"))
+        else:
+            self.webEngineView = QTextBrowser(Frame)
+            self.webEngineView.setObjectName(u"webEngineView")
+            self.webEngineView.setOpenExternalLinks(True)
 
         self.verticalLayout.addWidget(self.webEngineView)
 

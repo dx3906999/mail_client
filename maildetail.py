@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QFrame
 from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QFontMetrics, QDesktopServices
 import os
+import sys
 
 
 class MailDetailFrame(QFrame):
